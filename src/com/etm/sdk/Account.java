@@ -116,7 +116,7 @@ public interface Account extends EtmInterface {
     //名称	类型	说明
     //success	boole	是否成功获得response数据
     EtmResult transfer(String targetAddress, long amount, String message, String secret, String secondSecret);
-
+    EtmResult transferSigned(String targetAddress, long amount, String message, String secret, String secondSecret);
     //接口地址：/api/accounts/top
     //请求方式：get
     //支持格式：无

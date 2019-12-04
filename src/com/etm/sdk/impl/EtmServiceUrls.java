@@ -44,6 +44,7 @@ public final class EtmServiceUrls {
         static final String GET_UNCONFIRMED_TRANSACTION = "/api/transactions/unconfirmed/get";
         static final String GET_UNCONFIRMED_TRANSACTIONS = "/api/transactions/unconfirmed";
         static final String CREATE_TRANSACTION = "/api/transactions";
+        static final String PUT_TRANSACTIONS = "/api/transactions/signed";
     }
 
     final static class Peer{

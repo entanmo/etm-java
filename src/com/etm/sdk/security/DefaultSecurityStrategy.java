@@ -198,6 +198,9 @@ public class DefaultSecurityStrategy implements SecurityStrategy{
     @Override
     public int getTransactionTimestamp() {
         //calendar.add(Calendar.MILLISECOND, (zoneOffset+dstOffset));
+//        System.out.println(new Date().getTime());
+//        System.out.println( EtmConst.ETM_BEGIN_EPOCH.getTime());
+//        System.out.println( (int)((new Date().getTime() - EtmConst.ETM_BEGIN_EPOCH.getTime())/1000 - EtmConst.CLIENT_DRIFT_SECONDS));
         return (int)((new Date().getTime() - EtmConst.ETM_BEGIN_EPOCH.getTime())/1000 - EtmConst.CLIENT_DRIFT_SECONDS);
     }
 

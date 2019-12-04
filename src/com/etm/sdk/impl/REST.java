@@ -4,6 +4,7 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -58,7 +59,17 @@ public final class REST {
             logger.debug(String.format("POST url:%s, body:%s", url, requestBody));
             return httpClient.execute(post);
         }
+        protected static HttpResponse rawPut(String url, String requestBody, Map<String,String> customeHeads, String charset ) throws IOException{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpPut put = new HttpPut(encodeUrl(url));
 
+            addCustomeHeads(customeHeads, put);
+            StringEntity entity = createEntity(requestBody, charset);
+            put.setEntity(entity);
+
+            logger.debug(String.format("POST url:%s, body:%s", url, requestBody));
+            return httpClient.execute(put);
+        }
         protected static String getResponseContent(HttpResponse response) throws IOException{
 
             if (null == response)
@@ -98,6 +109,18 @@ public final class REST {
         public static String post(String url, String parameters,  Map<String, String> customeHeaders, String charset) throws IOException{
             try {
                 HttpResponse response = rawPost(url, parameters, customeHeaders, charset);
+                return getResponseContent(response);
+            }
+            catch (IOException ex){
+                String errorInfo = String.format("Exception when post,url:%s,data:%s", url, parameters);
+                logger.error(errorInfo, ex);
+                throw ex;
+            }
+        }
+        public static String put(String url, ParameterMap parameters,  Map<String, String> customeHeaders, String charset) throws IOException{
+            try {
+                String parametersString = parameters == null ? "" : parameters.toJSONString();
+                HttpResponse response = rawPut(url, parametersString, customeHeaders, charset);
                 return getResponseContent(response);
             }
             catch (IOException ex){

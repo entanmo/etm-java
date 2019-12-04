@@ -8,7 +8,7 @@ import java.util.TimeZone;
  * Created by eagle on 17-7-18.
  */
 public final class EtmConst {
-    public static final int CLIENT_DRIFT_SECONDS = 5;
+    public static final int CLIENT_DRIFT_SECONDS = 2;
     public static final int COIN = 100000000;
     public static final char BASE58_ADDRESS_PREFIX = 'A';
     public static final int MIN_BASE58_ADDRESS_LEN = 30;
@@ -19,7 +19,7 @@ public final class EtmConst {
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
-            date = df.parse("2016-06-27T20:00:00Z");
+           date = df.parse("2018-10-12T12:00:00Z");
         }
         catch (Exception ex){
             //never

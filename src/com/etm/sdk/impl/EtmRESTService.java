@@ -12,6 +12,7 @@ import com.etm.sdk.transaction.TransactionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +101,15 @@ public abstract class EtmRESTService implements EtmInterface{
             return fail(ex);
         }
     }
-
+    protected EtmResult put(String relativeUrl, ParameterMap parameters){
+        try{
+            String jsonString =  REST.put(getFullUrl(relativeUrl), parameters, getCustomeHeaders(), CHAR_SET);
+            return EtmResult.FromJsonString(jsonString);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
     protected EtmResult postMagic(String relativeUrl, String parameters){
         try{
             String jsonString =  REST.post(getFullUrl(relativeUrl), parameters, getCustomeHeaders(), CHAR_SET);
@@ -115,6 +124,13 @@ public abstract class EtmRESTService implements EtmInterface{
         ParameterMap transactionParameter = new ParameterMap()
                 .put("transaction", transaction);
         return postMagic(EtmServiceUrls.Peer.BROADCAST_TRANSACTION, transactionParameter );
+    }
+    protected EtmResult putTransaction(TransactionInfo transaction){
+        ArrayList a= new ArrayList<TransactionInfo>();
+        a.add(transaction);
+        ParameterMap transactionParameter = new ParameterMap()
+                .put("transactions", a);
+        return put(EtmServiceUrls.Transaction.PUT_TRANSACTIONS, transactionParameter );
     }
 
     protected EtmResult fail(Exception ex){

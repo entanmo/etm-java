@@ -106,7 +106,21 @@ public class AccountService extends com.etm.sdk.impl.EtmRESTService implements A
             return fail(ex);
         }
     }
+    @Override
+    public EtmResult transferSigned(String targetAddress, long amount, String message, String secret, String secondSecret){
+        try {
+            Argument.require(Validation.isValidAddress(targetAddress), "invalid target address");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
 
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildTransfer(targetAddress, amount, message, secret, secondSecret);
+            return putTransaction(transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
     @Override
     public EtmResult getTopAccounts(QueryParameters parameters){
         try {
