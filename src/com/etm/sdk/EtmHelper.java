@@ -37,7 +37,16 @@ public class EtmHelper {
             return null;
         }
     }
-
+    public String generateAddressByPk(String publickey){
+        SecurityStrategy security = factory.getSecurity();
+        try {
+            return security.getBase58Address(publickey);
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
     public  Date dateFromEtmTimestamp(int timestamp){
         Date beginEpoch =  EtmConst.ETM_BEGIN_EPOCH ;
         Calendar calendar = Calendar.getInstance();

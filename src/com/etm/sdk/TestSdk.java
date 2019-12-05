@@ -35,6 +35,8 @@ public class TestSdk {
             if(result.isSuccessful()){
                 Map<String,Object> accountMap = (Map<String,Object>)result.parseMap().get("account");
                 String accountPublicKey = EtmSDK.Helper.getPublicKey(secret);
+                String genAddress = EtmSDK.Helper.generateAddressByPk(accountPublicKey);
+                System.out.println("离线生成地址："+ genAddress);
                 String accountAddress = accountMap.get("address").toString();
                 BigDecimal balance = BigDecimal.valueOf(Long.parseLong(accountMap.get("balance").toString()), 8);
 
@@ -53,7 +55,6 @@ public class TestSdk {
             System.out.println(result.getRawJson());
             if(result.isSuccessful()){
                 String transactionId = result.parseMap().get("transactionId").toString();
-                System.out.println("交易成功,transaction id：" + transactionId);
                 System.out.println("交易成功,transaction id：" + transactionId);
 
                 int retry = 10 ;
